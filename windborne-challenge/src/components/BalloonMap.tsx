@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
-import { BalloonPosition, fetchBalloonData } from '../services/balloonService';
-import { WeatherData, fetchWeatherForLocation } from '../services/weatherService';
+import type { BalloonPosition } from '../services/balloonService';
+import { fetchBalloonData } from '../services/balloonService';
+
+import type { WeatherData } from '../services/weatherService';
+import { fetchWeatherForLocation } from '../services/weatherService';
+
 import 'leaflet/dist/leaflet.css';
 import './BalloonMap.css';
 
