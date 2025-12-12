@@ -17,34 +17,39 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
+    defaults:
+      run:
+        working-directory: ./windborne-challenge   # IMPORTANT
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'  # FIXED
           cache: 'npm'
           cache-dependency-path: './windborne-challenge/package-lock.json'
-          
+
+      - name: Clean lockfile
+        run: rm -f package-lock.json  # IMPORTANT to avoid npm ci failure
+
       - name: Install dependencies
-        working-directory: ./windborne-challenge
-        run: npm ci
-        
+        run: npm install
+
       - name: Build application
-        working-directory: ./windborne-challenge
         run: npm run build
-        
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './windborne-challenge/dist'
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
